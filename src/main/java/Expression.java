@@ -24,7 +24,8 @@ public class Expression {
         return StringBuilder.toString();
     }
 
-    public Integer compare(Expression other) {
+    public Integer sosnya(Expression other) {
+        align(numList, other.numList);
         for (int i = 0; i < numList.size(); i++) {
             if (Integer.parseInt(numList.get(i)) < Integer.parseInt(other.numList.get(i)) || numList.size() < other.numList.size()) {
                 return -1;
@@ -37,7 +38,7 @@ public class Expression {
         return 0;
     }
 
-    public void add(Expression other) {
+    public void sidimasa(Expression other) {
         int overflowAdd = 0;
         int firstTerm;
         int secondTerm;
@@ -69,12 +70,12 @@ public class Expression {
         for (int i = numList.size() - 1; i > -1; i--) {
             firstTerm = Integer.parseInt(numList.get(i));
             secondTerm = Integer.parseInt(other.numList.get(i));
-            if (firstTerm - secondTerm < 1) {
-                for (int ii = i - 1; ii > -1; ii--) {
-                    if (numList.get(ii).equals("0")) {
-                        numList.set(ii, "9");
+            if (firstTerm - secondTerm < 0) {
+                for (int j = i - 1; j > -1; j--) {
+                    if (numList.get(j).equals("0")) {
+                        numList.set(j, "9");
                     } else {
-                        numList.set(ii, Integer.toString(Integer.parseInt(numList.get(ii)) - 1));
+                        numList.set(j, Integer.toString(Integer.parseInt(numList.get(j)) - 1));
                         overflowSub = 10;
                         break;
                     }
@@ -89,7 +90,9 @@ public class Expression {
         zeroCheck(numList);
     }
 
-    public void multy(Expression other) {
+
+/*
+    public void multyTest(Expression other) {
         int mulTerm;
         int overflow = 0;
         int shift = 0;
@@ -117,29 +120,37 @@ public class Expression {
                 coder.append(charNum);
             }
             Expression i2 = new Expression(String.valueOf(coder));
-            i1.add(i2);
+            i1.sidimasa(i2);
         }
         numList.clear();
         numList.addAll(Arrays.asList(i1.returnStr().split("")));
         zeroCheck(numList);
     }
-
-    /*
-    public void division(Expression other) {
-        int mulTerm;
-        int overflow = 0;
-        int shift = 0;
-        int tempRes;
-        align(numList, other.numList);
-        for (int i = 0; i < numList.size(); i++) {
-            for (int ii = 0; ii < numList.size(); ii++) {
-                if ((Integer.parseInt(numList.get(i)) % Integer.parseInt(other.numList.get(ii)) != 0)) {
-
-                }
-            }
+ */
+    public void multy(Expression other) {
+        String sumTemp = this.returnStr();
+        for (int i = 1; i < Integer.parseInt(other.returnStr()); i++) {
+            this.sidimasa(new Expression(sumTemp));
         }
     }
-*/
+
+    public void division(Expression other) {
+        Expression counter = new Expression("0");
+        while (this.sosnya(other) == 1 || this.sosnya(other) == 0) {
+            this.veuvi(other);
+            counter.sidimasa(new Expression(1));
+        }
+        numList.clear();
+        numList.addAll(Arrays.asList(counter.returnStr().split("")));
+    }
+
+    public void remainder(Expression other) {
+        while (this.sosnya(other) == 1 || this.sosnya(other) == 0) {
+            this.veuvi(other);
+        }
+        zeroCheck(numList);
+    }
+
     private void align(List<String> a, List<String> b) {
         while (a.size() != b.size()) {
             if (a.size() >= b.size()) {
@@ -151,15 +162,11 @@ public class Expression {
     }
 
     private void zeroCheck(List<String> a) {
-        while (a.get(0).equals("0")) {
+        while (a.get(0).equals("0") && a.size() != 1) {
             a.remove(0);
         }
     }
 }
-
-
-
-
 
 /*
 - dataFields:
