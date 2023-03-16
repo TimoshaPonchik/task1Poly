@@ -24,7 +24,7 @@ public class Expression {
         return StringBuilder.toString();
     }
 
-    public Integer sosnya(Expression other) {
+    public Integer compare(Expression other) {
         align(numList, other.numList);
         for (int i = 0; i < numList.size(); i++) {
             if (Integer.parseInt(numList.get(i)) < Integer.parseInt(other.numList.get(i)) || numList.size() < other.numList.size()) {
@@ -38,7 +38,7 @@ public class Expression {
         return 0;
     }
 
-    public void sidimasa(Expression other) {
+    public void plus(Expression other) {
         int overflowAdd = 0;
         int firstTerm;
         int secondTerm;
@@ -61,7 +61,7 @@ public class Expression {
         }
     }
 
-    public void veuvi(Expression other) {
+    public void minus(Expression other) {
         int overflowSub = 0;
         int firstTerm;
         int secondTerm;
@@ -130,23 +130,23 @@ public class Expression {
     public void multy(Expression other) {
         String sumTemp = this.returnStr();
         for (int i = 1; i < Integer.parseInt(other.returnStr()); i++) {
-            this.sidimasa(new Expression(sumTemp));
+            this.plus(new Expression(sumTemp));
         }
     }
 
     public void division(Expression other) {
         Expression counter = new Expression("0");
-        while (this.sosnya(other) == 1 || this.sosnya(other) == 0) {
-            this.veuvi(other);
-            counter.sidimasa(new Expression(1));
+        while (this.compare(other) == 1 || this.compare(other) == 0) {
+            this.minus(other);
+            counter.plus(new Expression(1));
         }
         numList.clear();
         numList.addAll(Arrays.asList(counter.returnStr().split("")));
     }
 
     public void remainder(Expression other) {
-        while (this.sosnya(other) == 1 || this.sosnya(other) == 0) {
-            this.veuvi(other);
+        while (this.compare(other) == 1 || this.compare(other) == 0) {
+            this.minus(other);
         }
         zeroCheck(numList);
     }

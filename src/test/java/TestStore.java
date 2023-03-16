@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class testStore {
+public class TestStore {
     @Test
     public void testIntStorage() {
         int str = 123456;
@@ -20,7 +19,7 @@ public class testStore {
     public void testCompare() {
         Expression i1 = new Expression(100);
         Expression i2 = new Expression(5);
-        assert i1.sosnya(i2).equals(1);
+        assert i1.compare(i2).equals(1);
     }
 
     @Test
@@ -30,7 +29,7 @@ public class testStore {
         int a12 = a1 + a2;
         Expression i1 = new Expression(a1);
         Expression i2 = new Expression(a2);
-        i1.sidimasa(i2);
+        i1.plus(i2);
         System.out.println(i1.returnStr());
         assert Integer.toString(a12).equals(i1.returnStr());
     }
@@ -42,7 +41,7 @@ public class testStore {
         int a12 = a1 - a2;
         Expression i1 = new Expression(a1);
         Expression i2 = new Expression(a2);
-        i1.veuvi(i2);
+        i1.minus(i2);
         assert Integer.toString(a12).equals(i1.returnStr());
     }
 
